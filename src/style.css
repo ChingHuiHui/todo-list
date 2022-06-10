@@ -24,6 +24,11 @@ main {
   }
 }
 
+
+.todos {
+  @apply space-y-3;
+}
+
 .todo {
   @apply flex items-center space-x-2;
 
@@ -67,4 +72,8 @@ main {
 .submit-btn {
   @apply bg-red-400 text-white font-medium px-4 py-2 rounded-full;
   @apply hover:bg-red-500 transition-colors duration-300;
+}
+
+button:disabled {
+  @apply hidden;
 }

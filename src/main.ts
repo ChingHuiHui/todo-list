@@ -39,6 +39,46 @@ function buildTodo(content: string): void {
 
   const statusControl = document.createElement('div')
   statusControl.className = 'status-control'
+  statusControl.addEventListener('click', (e: PointerEvent) => {
+    const targetTodo = e.path.find((e) => e.classList.contains('todo'))
+
+    const isCompleted = targetTodo.classList.contains('completed')
+
+    if (isCompleted) {
+      targetTodo.classList.remove('completed')
+      editBtn.disabled = false
+      return
+    }
+
+    targetTodo.classList.add('completed')
+    editBtn.disabled = true
+  })
+
+  const editBtn = document.createElement('button')
+  editBtn.textContent = 'Edit'
+  editBtn.addEventListener('click', (e) => {
+    const targetTodo = e.path.find((e) => e.classList.contains('todo'))
+
+    const isEditable = targetTodo.classList.contains('edit')
+
+    if (isEditable) {
+      targetTodo.classList.remove('edit')
+      editBtn.textContent = 'Edit'
+      return
+    }
+
+    editBtn.textContent = 'OK'
+    targetTodo.classList.add('edit')
+  })
+
+  const deleteBtn = document.createElement('button')
+  deleteBtn.textContent = 'Delete'
+  deleteBtn.addEventListener('click', (e) => {
+    const targetTodo = e.path.find((e) => e.classList.contains('todo'))
+
+    todos.removeChild(targetTodo)
+    targetTodo.remove()
+  })
 
   const contentBlock = document.createElement('div')
   contentBlock.className = 'content-block'
@@ -49,26 +89,22 @@ function buildTodo(content: string): void {
   contentText.textContent = content
   editInput.value = content
 
+  editInput.addEventListener('input', (e: Event) => {
+    const value = (e.target as HTMLInputElement).value
+
+    contentText.textContent = value
+    editInput.value = value
+  })
+
   contentBlock.appendChild(contentText)
   contentBlock.appendChild(editInput)
 
   todoDiv.appendChild(statusControl)
   todoDiv.appendChild(contentBlock)
-
-  console.log('todoDiv', todoDiv)
+  todoDiv.appendChild(editBtn)
+  todoDiv.appendChild(deleteBtn)
 
   todos.appendChild(todoDiv)
 
-  statusControl.addEventListener('click', (e: PointerEvent) => {
-    const targetTodo = e.path.find((e) => e.classList.contains('todo'))
-
-    const isCompleted = targetTodo.classList.contains('completed')
-
-    if (isCompleted) {
-      targetTodo.classList.remove('completed')
-      return
-    }
-
-    targetTodo.classList.add('completed')
-  })
+  todoInput.value = ''
 }
