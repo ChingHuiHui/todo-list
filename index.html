@@ -7,7 +7,61 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main>
+      <div class="app">
+        <section class="flex-1 p-5">
+          <div class="mb-4">
+            <button class="tab">ALL</button>
+            <button class="tab">Completed</button>
+            <button class="tab">not completed</button>
+          </div>
+          <div>
+            <div class="todo">
+              <div class="status-control"></div>
+              <div class="flex-1">
+                <p class="content">I am a todo.</p>
+                <input type="text" class="edit-input" />
+              </div>
+              <!-- EDIT -->
+              <button>edit</button>
+              <!-- DELETE -->
+              <button>delete</button>
+            </div>
+            <div class="todo completed">
+              <div class="status-control"></div>
+              <div class="flex-1">
+                <p class="content">I am the first todo.</p>
+                <input type="text" class="edit-input" />
+              </div>
+              <button>edit</button>
+              <button>delete</button>
+            </div>
+            <div class="todo edit">
+              <div class="status-control"></div>
+              <div class="flex-1">
+                <p class="content">I am the second todo.</p>
+                <input
+                  type="text"
+                  value="I am the second todo."
+                  class="edit-input border px-2"
+                />
+              </div>
+              <button>edit</button>
+              <button>delete</button>
+            </div>
+          </div>
+        </section>
+        <form class="form">
+          <input
+            name="todo-input"
+            id="todo-input"
+            placeholder="Enter your todo..."
+            class="px-4 py-2 flex-1 rounded-lg"
+          />
+          <button class="submit-btn">SUBMIT</button>
+        </form>
+      </div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

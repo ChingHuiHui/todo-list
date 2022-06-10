@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+main {
+  @apply flex justify-center min-h-screen bg-gray-100;
+}
+
+.app {
+  @apply flex-1 w-full md:max-w-[768px] border-8 bg-white;
+  @apply flex flex-col space-y-5;
+}
+
+.tab {
+  @apply border px-4 py-1 text-sm rounded-full;
+  @apply transition-colors duration-300;
+
+  &.active {
+    @apply bg-red-500 border-red-500 text-white font-medium;
+  }
+
+  &:hover {
+    @apply bg-red-400 border-red-400 text-white font-medium;
+  }
+}
+
+.todo {
+  @apply flex items-center space-x-2;
+
+  .status-control {
+    @apply w-4 h-4 rounded-full border cursor-pointer;
+  }
+
+  .edit-input {
+    @apply hidden;
+  }
+
+  &.completed {
+    .content {
+      @apply line-through text-gray-500;
+   }
+  }
+
+  &.edit {
+    .edit-input {
+      @apply block;
+    }
+
+    .content {
+      @apply hidden;
+    }
+  }
+}
+
+.form {
+  @apply flex space-x-5 mt-auto bg-gray-100 px-5 py-3;
+}
+
+.submit-btn {
+  @apply bg-red-400 text-white font-medium px-4 py-2 rounded-full;
+  @apply hover:bg-red-500 transition-colors duration-300;
+}
