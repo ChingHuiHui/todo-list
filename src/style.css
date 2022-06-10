@@ -31,13 +31,21 @@ main {
     @apply w-4 h-4 rounded-full border cursor-pointer;
   }
 
+  .content-block {
+    @apply flex-1
+  }
+
   .edit-input {
-    @apply hidden;
+    @apply hidden border px-2;
   }
 
   &.completed {
-    .content {
+    .content-block > p {
       @apply line-through text-gray-500;
+   }
+
+   .status-control {
+     @apply bg-green-500;
    }
   }
 
@@ -46,7 +54,7 @@ main {
       @apply block;
     }
 
-    .content {
+    .content-block > p {
       @apply hidden;
     }
   }

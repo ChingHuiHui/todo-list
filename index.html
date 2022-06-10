@@ -15,35 +15,24 @@
             <button class="tab">Completed</button>
             <button class="tab">not completed</button>
           </div>
-          <div>
-            <div class="todo">
-              <div class="status-control"></div>
-              <div class="flex-1">
-                <p class="content">I am a todo.</p>
-                <input type="text" class="edit-input" />
-              </div>
-              <!-- EDIT -->
-              <button>edit</button>
-              <!-- DELETE -->
-              <button>delete</button>
-            </div>
+          <div class="todos">
             <div class="todo completed">
               <div class="status-control"></div>
-              <div class="flex-1">
-                <p class="content">I am the first todo.</p>
+              <div class="content-block">
+                <p>I am the first todo.</p>
                 <input type="text" class="edit-input" />
               </div>
-              <button>edit</button>
-              <button>delete</button>
+              <button id="edit-btn">edit</button>
+              <button id="delete-btn">delete</button>
             </div>
             <div class="todo edit">
               <div class="status-control"></div>
-              <div class="flex-1">
-                <p class="content">I am the second todo.</p>
+              <div class="content-block">
+                <p>I am the second todo.</p>
                 <input
                   type="text"
                   value="I am the second todo."
-                  class="edit-input border px-2"
+                  class="edit-input"
                 />
               </div>
               <button>edit</button>
@@ -51,14 +40,14 @@
             </div>
           </div>
         </section>
-        <form class="form">
+        <form class="form" id="form">
           <input
             name="todo-input"
             id="todo-input"
             placeholder="Enter your todo..."
             class="px-4 py-2 flex-1 rounded-lg"
           />
-          <button class="submit-btn">SUBMIT</button>
+          <button type="submit" class="submit-btn">SUBMIT</button>
         </form>
       </div>
     </main>
