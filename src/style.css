@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 main {
-  @apply flex justify-center min-h-screen bg-gray-100;
+  @apply flex justify-center min-h-screen md:py-20 ;
 }
 
 .app {
-  @apply flex-1 w-full md:max-w-[768px] border-8 bg-white;
+  @apply flex-1 w-full md:max-w-[768px] border-8 bg-white md:shadow-xl;
   @apply flex flex-col space-y-5;
 }
 
@@ -23,7 +23,6 @@ main {
     @apply bg-red-400 border-red-400 text-white font-medium;
   }
 }
-
 
 .todos {
   @apply space-y-3;
@@ -69,9 +68,13 @@ main {
   @apply flex space-x-5 mt-auto bg-gray-100 px-5 py-3;
 }
 
-.submit-btn {
-  @apply bg-red-400 text-white font-medium px-4 py-2 rounded-full;
-  @apply hover:bg-red-500 transition-colors duration-300;
+button {
+  @apply text-gray-500 text-xs;
+  @apply transition-colors duration-300;
+
+  &:hover {
+    @apply text-gray-700;
+  }
 }
 
 button:disabled {

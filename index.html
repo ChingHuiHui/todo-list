@@ -11,9 +11,9 @@
       <div class="app">
         <section class="flex-1 p-5">
           <div class="mb-4">
-            <button class="tab">ALL</button>
-            <button class="tab">Completed</button>
-            <button class="tab">not completed</button>
+            <button id="filter-all" class="tab active">ALL</button>
+            <button id="filter-completed" class="tab">Completed</button>
+            <button id="filter-not-completed" class="tab">Not completed</button>
           </div>
           <div class="todos"></div>
         </section>
@@ -24,7 +24,6 @@
             placeholder="Enter your todo..."
             class="px-4 py-2 flex-1 rounded-lg"
           />
-          <button type="submit" class="submit-btn">SUBMIT</button>
         </form>
       </div>
     </main>
