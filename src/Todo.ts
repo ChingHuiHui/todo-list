@@ -1,4 +1,5 @@
-import { changeTodoList, todoList } from './main'
+import { loadData } from './main'
+import storage from './Storage'
 import { STATUS, Todo } from './type'
 
 export default class TodoElement implements Todo {
@@ -22,12 +23,20 @@ export default class TodoElement implements Todo {
     return this.#todoDiv.classList.contains('edit')
   }
 
-  buildTodoDiv(): void {
+  #store() {
+    storage.setItem({
+      id: this.id,
+      content: this.content,
+      status: this.status,
+    })
+  }
+
+  #buildTodoDiv(): void {
     this.#todoDiv.className = 'todo'
     this.#todoDiv.id = this.id
   }
 
-  buildStatusControl(): void {
+  #buildStatusControl(): void {
     this.#statusControl.className = 'status-control'
 
     if (this.isCompleted) {
@@ -35,14 +44,16 @@ export default class TodoElement implements Todo {
       this.#editBtn.disabled = true
     }
 
-    this.#statusControl.addEventListener('click', () => this.toggle())
+    this.#statusControl.addEventListener('click', () => this.#toggle())
   }
 
-  toggle(): void {
+  #toggle(): void {
     if (this.isCompleted) {
       this.#todoDiv.classList.remove('completed')
       this.status = STATUS.DEFAULT
       this.#editBtn.disabled = false
+
+      this.#store()
 
       return
     }
@@ -50,9 +61,11 @@ export default class TodoElement implements Todo {
     this.#todoDiv.classList.add('completed')
     this.status = STATUS.COMPLETED
     this.#editBtn.disabled = true
+
+    this.#store()
   }
 
-  buildContentBlock(): void {
+  #buildContentBlock(): void {
     this.#contentBlock.className = 'content-block'
 
     const contentText = document.createElement('p')
@@ -67,18 +80,20 @@ export default class TodoElement implements Todo {
       contentText.textContent = value
       editInput.value = value
       this.content = value
+
+      this.#store()
     })
 
     this.#contentBlock.appendChild(contentText)
     this.#contentBlock.appendChild(editInput)
   }
 
-  buildEditBtn(): void {
+  #buildEditBtn(): void {
     this.#editBtn.textContent = 'Edit'
-    this.#editBtn.addEventListener('click', () => this.edit())
+    this.#editBtn.addEventListener('click', () => this.#edit())
   }
 
-  edit(): void {
+  #edit(): void {
     if (this.isEditable) {
       this.#todoDiv.classList.remove('edit')
       this.#editBtn.textContent = 'Edit'
@@ -89,13 +104,15 @@ export default class TodoElement implements Todo {
     this.#todoDiv.classList.add('edit')
   }
 
-  buildDeleteBtn(): void {
+  #buildDeleteBtn(): void {
     this.#deleteBtn.textContent = 'Delete'
-    this.#deleteBtn.addEventListener('click', () => this.delete())
+    this.#deleteBtn.addEventListener('click', () => this.#delete())
   }
 
-  delete(): void {
-    changeTodoList(todoList.filter(({ id }) => id !== this.id))
+  #delete(): void {
+    storage.set(storage.items.filter(({ id }) => id !== this.id))
+
+    loadData()
     this.destroy()
   }
 
@@ -108,11 +125,11 @@ export default class TodoElement implements Todo {
   }
 
   build(): HTMLDivElement {
-    this.buildTodoDiv()
-    this.buildStatusControl()
-    this.buildContentBlock()
-    this.buildEditBtn()
-    this.buildDeleteBtn()
+    this.#buildTodoDiv()
+    this.#buildStatusControl()
+    this.#buildContentBlock()
+    this.#buildEditBtn()
+    this.#buildDeleteBtn()
 
     this.#todoDiv.appendChild(this.#statusControl)
     this.#todoDiv.appendChild(this.#contentBlock)

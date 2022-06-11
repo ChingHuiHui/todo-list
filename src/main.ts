@@ -1,6 +1,7 @@
+import storage from './Storage'
 import './style.css'
 import TodoElement from './Todo'
-import { STATUS } from './type'
+import { STATUS, Todo } from './type'
 
 function uuidv4(): string {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
@@ -11,9 +12,12 @@ function uuidv4(): string {
   )
 }
 
-export let todoList: TodoElement[] = []
-export function changeTodoList(changedTodoList: TodoElement[]) {
-  todoList = changedTodoList
+export let todoList: TodoElement[]
+
+export function loadData() {
+  todoList = storage.items.map(
+    ({ id, content, status }: Todo) => new TodoElement(id, content, status)
+  )
 }
 
 let inputValue: string = ''
@@ -56,6 +60,7 @@ form.addEventListener('submit', (e: Event) => {
   }
 
   todoList.push(new TodoElement(uuidv4(), inputValue))
+  storage.set(todoList)
   inputValue = ''
   todoInput.value = ''
 
@@ -79,4 +84,5 @@ tabs.forEach((tab) => {
   })
 })
 
+loadData()
 showTodos()
