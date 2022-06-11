@@ -2,15 +2,7 @@ import storage from './Storage'
 import './style.css'
 import TodoElement from './Todo'
 import { STATUS, Todo } from './type'
-
-function uuidv4(): string {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-    (
-      c ^
-      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
-  )
-}
+import { v4 as uuid } from 'uuid'
 
 export let todoList: TodoElement[]
 
@@ -59,7 +51,7 @@ form.addEventListener('submit', (e: Event) => {
     return
   }
 
-  todoList.push(new TodoElement(uuidv4(), inputValue))
+  todoList.push(new TodoElement(uuid(), inputValue))
   storage.set(todoList)
   inputValue = ''
   todoInput.value = ''
