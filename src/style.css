@@ -12,15 +12,15 @@ main {
 }
 
 .tab {
-  @apply border px-4 py-1 text-sm rounded-full;
+  @apply border px-4 py-1 text-sm rounded-full font-medium;
   @apply transition-colors duration-300;
 
   &.active {
-    @apply bg-red-500 border-red-500 text-white font-medium;
+    @apply bg-red-500 border-red-500 text-white ;
   }
 
   &:hover {
-    @apply bg-red-400 border-red-400 text-white font-medium;
+    @apply bg-red-400 border-red-400 text-white;
   }
 }
 
@@ -36,11 +36,11 @@ main {
   }
 
   .content-block {
-    @apply flex-1
+    @apply flex-1;
   }
 
   .edit-input {
-    @apply hidden border px-2;
+    @apply hidden border ;
   }
 
   &.completed {
@@ -55,7 +55,11 @@ main {
 
   &.edit {
     .edit-input {
-      @apply block;
+      @apply block w-full;
+    }
+
+    .status-control {
+      @apply invisible;
     }
 
     .content-block > p {
