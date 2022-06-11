@@ -1,7 +1,8 @@
 import './style.css'
 import TodoElement from './Todo'
+import { STATUS } from './type'
 
-function uuidv4() {
+function uuidv4(): string {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
     (
       c ^
@@ -10,21 +11,31 @@ function uuidv4() {
   )
 }
 
-let inputValue: string = ''
 export let todoList: TodoElement[] = []
-
 export function changeTodoList(changedTodoList: TodoElement[]) {
   todoList = changedTodoList
 }
+
+let inputValue: string = ''
 
 const todoInput = document.querySelector('#todo-input') as HTMLInputElement
 const form = document.querySelector('#form') as Element
 const todoSection = document.querySelector('.todos') as Element
 
-function showTodos(todoList: TodoElement[]): void {
+function showTodos(): void {
   todoSection.innerHTML = ''
 
-  todoList.forEach((todoElement: TodoElement) => {
+  let showedTodos: TodoElement[] = [...todoList]
+
+  if (activeTab === 'filter-completed') {
+    showedTodos = todoList.filter(({ status }) => status === STATUS.COMPLETED)
+  }
+
+  if (activeTab === 'filter-not-completed') {
+    showedTodos = todoList.filter(({ status }) => status === STATUS.DEFAULT)
+  }
+
+  showedTodos.forEach((todoElement: TodoElement) => {
     todoElement.destroy()
     todoElement.init()
     const todo = todoElement.build()
@@ -48,7 +59,24 @@ form.addEventListener('submit', (e: Event) => {
   inputValue = ''
   todoInput.value = ''
 
-  showTodos(todoList)
+  showTodos()
 })
 
-showTodos(todoList)
+const tabs = document.querySelectorAll('.tab')
+let activeTab = 'filter-all'
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', (e) => {
+    tabs.forEach((tab) => tab.classList.remove('active'))
+
+    const target = e.target as HTMLDivElement
+
+    target.classList.add('active')
+
+    activeTab = target.id
+
+    showTodos()
+  })
+})
+
+showTodos()

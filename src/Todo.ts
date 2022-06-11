@@ -66,6 +66,7 @@ export default class TodoElement implements Todo {
 
       contentText.textContent = value
       editInput.value = value
+      this.content = value
     })
 
     this.#contentBlock.appendChild(contentText)
