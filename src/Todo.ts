@@ -5,7 +5,7 @@ import { STATUS, Todo } from './type'
 export default class TodoElement implements Todo {
   #statusControl: HTMLDivElement
   #todoDiv: HTMLDivElement
-  #contentBlock: HTMLDivElement
+  #contentBlock: HTMLInputElement
   #editBtn: HTMLButtonElement
   #deleteBtn: HTMLButtonElement
 
@@ -66,26 +66,18 @@ export default class TodoElement implements Todo {
   }
 
   #buildContentBlock(): void {
-    this.#contentBlock.className = 'content-block'
+    this.#contentBlock.className = 'edit-input'
+    this.#contentBlock.readOnly = true
+    this.#contentBlock.value = this.content
 
-    const contentText = document.createElement('p')
-    const editInput = document.createElement('input')
-    editInput.className = 'edit-input'
-    contentText.textContent = this.content
-    editInput.value = this.content
-
-    editInput.addEventListener('input', (e: Event) => {
+    this.#contentBlock.addEventListener('input', (e: Event) => {
       const value = (e.target as HTMLInputElement).value
 
-      contentText.textContent = value
-      editInput.value = value
+      this.#contentBlock.value = value
       this.content = value
 
       this.#store()
     })
-
-    this.#contentBlock.appendChild(contentText)
-    this.#contentBlock.appendChild(editInput)
   }
 
   #buildEditBtn(): void {
@@ -97,11 +89,13 @@ export default class TodoElement implements Todo {
     if (this.isEditable) {
       this.#todoDiv.classList.remove('edit')
       this.#editBtn.textContent = 'Edit'
+      this.#contentBlock.readOnly = true
       return
     }
 
     this.#editBtn.textContent = 'OK'
     this.#todoDiv.classList.add('edit')
+    this.#contentBlock.readOnly = false
   }
 
   #buildDeleteBtn(): void {
@@ -119,7 +113,7 @@ export default class TodoElement implements Todo {
   init(): void {
     this.#todoDiv = document.createElement('div')
     this.#statusControl = document.createElement('div')
-    this.#contentBlock = document.createElement('div')
+    this.#contentBlock = document.createElement('input')
     this.#editBtn = document.createElement('button')
     this.#deleteBtn = document.createElement('button')
   }

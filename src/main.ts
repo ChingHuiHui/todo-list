@@ -24,7 +24,7 @@ let inputValue: string = ''
 
 const todoInput = document.querySelector('#todo-input') as HTMLInputElement
 const form = document.querySelector('#form') as Element
-const todoSection = document.querySelector('.todos') as Element
+const todoSection = document.querySelector('.todo-section') as Element
 
 function showTodos(): void {
   todoSection.innerHTML = ''
